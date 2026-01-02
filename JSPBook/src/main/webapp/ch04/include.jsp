@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Include Tag</title>
-</head>
+</head>	
 <body>
 	<!-- include 액션 태그로 현재 날짜와 시간을 출력하는 페이지 포함하기 -->
 	<h2>include 액션 태그</h2>
