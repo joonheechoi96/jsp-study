@@ -45,10 +45,12 @@
 		newBook.setUnitPrice(price);
 		newBook.setAuthor(author);
 		newBook.setPublisher(publisher);
+		newBook.setReleaseDate(releaseDate);
 		newBook.setDescription(description);
 		newBook.setCategory(category);
 		newBook.setUnitsInStock(stock);
 		newBook.setCondition(condition);
+		
 		
 		BookRepository dao = BookRepository.getInstance();
 		dao.addBook(newBook);
