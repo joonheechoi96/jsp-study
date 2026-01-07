@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- session이 연결되는 동안 도서 데이터를 공유하기 위해 사용 -->
-<%--<jsp:useBean id="bookDAO" class="dao.BookRepository" scope="session" /> --%>
+<%-- <jsp:useBean id="bookDAO" class="dao.BookRepository" scope="session" /> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,7 @@
 	<!-- 부트스트랩 연결 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 	<!-- 로컬에서 직접 넣기 -->
-<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css"> -->
+	<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css"> -->
 </head>
 <body>
 	<div class="container py-4">
@@ -27,7 +27,7 @@
     <%
     	// ArrayList<Book> listOfBooks = bookDAO.getAllBooks();
     	// BookRepository 공유 객체로 변경
-    	// 왜? 자바빈을 쓰면 해당 객체가 scope내에 존재하면 재사용하고
+    	// 왜? 자바빈을 쓰면 해당 객체가 scope 내에 존재하면 재사용하고
     	// 존재하지 않으면 새롭게 생성하기 때문에 객체 내 데이터가 불일치가 발생
     	BookRepository dao = BookRepository.getInstance();
     	ArrayList<Book> listOfBooks = dao.getAllBooks();
@@ -42,9 +42,9 @@
         <div class="h-100 p-2">
         	<!-- 도서 정보 -->
         	<!-- 웹앱 내부 폴더 사용 시 -->
-        	<%-- <img alt="도서이미지" src="./resources/images/<%= book.getFilename()%>" style="width:250px; height:350px;"> --%>
+        	<%-- <img alt="도서이미지" src="./resources/images/<%= book.getFilename() %>" style="width: 250px; height: 350px;"> --%>
         	<!-- 외부 폴더 사용 시 -->
-        	<img alt="도서이미지" src="<%=request.getContextPath()%>/images/<%= book.getFilename()%>" style="width:250px; height:350px;">
+        	<img alt="도서이미지" src="<%= request.getContextPath() %>/images/<%= book.getFilename() %>" style="width: 250px; height: 350px;">
         	
         	<h5><b><%= book.getName() %></b></h5>
         	<p>
@@ -55,8 +55,9 @@
         	<p><%= book.getDescription().substring(0, 60) %>...</p>
         	<p><%= book.getUnitPrice() %>원</p>
         	<p>
-        		<a href="./book.jsp?id=<%= book.getBookId()%>" class="btn btn-secondary" role="button">
-        		상세 정보 &raquo;</a>
+						<a href="./book.jsp?id=<%= book.getBookId() %>" class="btn btn-secondary" role="button">
+							상세 정보 &raquo;
+						</a>
         	</p>
         </div>
       </div>
