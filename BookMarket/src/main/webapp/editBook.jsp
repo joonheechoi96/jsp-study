@@ -1,28 +1,35 @@
 <%@page import="java.sql.SQLException"%>
-<%@page import="dao.BookRepository"%>
-<%@page import="dto.Book"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- session이 연결되는 동안 도서 데이터를 공유하기 위해 사용 -->
-<%-- <jsp:useBean id="bookDAO" class="dao.BookRepository" scope="session" /> --%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>도서 목록</title>
+	<title>도서 편집</title>
 	<!-- 부트스트랩 연결 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 	<!-- 로컬에서 직접 넣기 -->
 	<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css"> -->
+	
+	<script type="text/javascript">
+		function deleteConfirm(id) {
+			if (confirm('정말 삭제합니까?')) {
+				location.href = './deleteBook.jsp?id=' + id;
+			}	
+		}
+	</script>
 </head>
 <body>
+	<!-- 도서 편집 페이지 -->
+	<%
+		String edit = request.getParameter("edit");
+	%>
 	<div class="container py-4">
 		<%@ include file="menu.jsp" %>
     
     <jsp:include page="title.jsp">
-    	<jsp:param value="도서목록" name="title"/>
-    	<jsp:param value="BookList" name="sub"/>
+    	<jsp:param value="도서 편집" name="title"/>
+    	<jsp:param value="Book Editing" name="sub"/>
     </jsp:include>
     
     <%@ include file="dbconn.jsp" %>
@@ -41,12 +48,7 @@
  		 	%>
       <div class="col-md-4">
         <div class="h-100 p-2">
-        	<!-- 도서 정보 -->
-        	<!-- 웹앱 내부 폴더 사용 시 -->
-        	<%-- <img alt="도서이미지" src="./resources/images/<%= book.getFilename() %>" style="width: 250px; height: 350px;"> --%>
-        	<!-- 외부 폴더 사용 시 -->
         	<img alt="도서이미지" src="<%= request.getContextPath() %>/images/<%= rs.getString("b_fileName") %>" style="width: 250px; height: 350px;">
-        	
         	<h5><b><%= rs.getString("b_name") %></b></h5>
         	<p>
         		<%= rs.getString("b_author") %>
@@ -56,9 +58,16 @@
         	<p><%= rs.getString("b_description").substring(0, 60) %>...</p>
         	<p><%= rs.getInt("b_unitPrice") %>원</p>
         	<p>
-						<a href="./book.jsp?id=<%= rs.getString("b_id") %>" class="btn btn-secondary" role="button">
-							상세 정보 &raquo;
-						</a>
+        		<% if ("update".equals(edit)) { %>
+        			<a href="./updateBook.jsp?id=<%= rs.getString("b_id") %>" class="btn btn-success" role="button">
+							수정 &raquo;
+							</a>
+        		<% } else if ("delete".equals(edit)) { %>
+        			<a href="javascript:void(0)" class="btn btn-danger" role="button"
+        					onclick="deleteConfirm('<%= rs.getString("b_id")%>')">
+							삭제 &raquo;
+							</a>
+        		<% } %>
         	</p>
         </div>
       </div>
