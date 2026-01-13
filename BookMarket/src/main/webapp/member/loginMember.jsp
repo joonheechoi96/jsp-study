@@ -16,31 +16,33 @@
 		<%@ include file="/menu.jsp" %>
 
 		<!-- 중간 타이틀 영역 -->
-		    <jsp:include page="/title.jsp">
-		    	<jsp:param value="회원 로그인" name="title"/>
-		    	<jsp:param value="Membership Login" name="sub"/>
-		    </jsp:include>
-
+    <jsp:include page="/title.jsp">
+    	<jsp:param value="회원 로그인" name="title"/>
+    	<jsp:param value="Membership Login" name="sub"/>
+    </jsp:include>
 		
 		<!-- 본문 영역 -->
-    <div class="row align-items-md-stretch text-center">
-			<c:choose>
-      	<c:when test="${msg == '0'}">
-        	<h2 class="alert alert-danger">회원 정보가 수정되었습니다.</h2>
-      	</c:when>
-        <c:when test="${msg == '1'}">
-        	<h2 class="alert alert-danger">회원 가입을 축하드립니다.</h2>
-        </c:when>
-        <c:when test="${msg == '2'}">
-	        <h2 class="alert alert-danger">
-	        	${sessionScope.loginId}님 환영합니다. <!-- session.getAttribute("loginId"); 와 동일 -->
-	        </h2>
-        </c:when>
-        <c:otherwise>
-        	<h2 class="alert alert-danger">회원 정보가 삭제되었습니다.</h2>
-        </c:otherwise>
-    	</c:choose>
- 		</div>
+    <div class="container text-center">
+			<div class="col-md-4 mx-auto">
+				<h3 class="form-signin-heading">Please sign in</h3>
+				
+				<c:if test="${not empty param.error}">
+					<div class="alert alert-danger">아이디와 비밀번호를 확인해 주세요.	</div>
+				</c:if>
+				
+				<form class="form-signin" action="./processLoginMember.jsp" method="post">
+    			<div class="form-floating mb-3">     
+     				<input type="text" class="form-control" name="id" id="floatingInput" placeholder="ID" required autofocus>
+     				<label for="floatingInput">ID</label>
+    			</div>
+    			<div class="form-floating mb-3">     
+  	 				<input type="password" class="form-control" name="password" placeholder="Password">
+	    			<label for="floatingPassword">Password</label>
+					</div>
+  				<button type="submit" class="btn btn-lg btn-success w-100">로그인</button>
+  			</form>
+			</div>
+		</div>
 
 		<!-- 푸터(바닥글) 영역 -->
 		<%@ include file="/footer.jsp" %>
